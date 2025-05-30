@@ -1,0 +1,13 @@
+# Ignore executable files
+*.exe
+*.out
+*.o
+*.obj
+
+# Ignore IDE/editor folders
+.vscode/
+.idea/
+
+# Ignore system files
+.DS_Store
+Thumbs.db
