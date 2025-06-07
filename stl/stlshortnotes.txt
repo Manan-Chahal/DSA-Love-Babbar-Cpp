@@ -1,0 +1,185 @@
+# Standard Template Library (STL) Notes with Examples
+
+## Overview
+
+STL is a collection of C++ template classes to provide common data structures and functions such as:
+
+* Vectors
+* Lists
+* Queues
+* Stacks
+* Maps
+* Sets
+
+It includes algorithms for searching, sorting, manipulating data, etc.
+
+STL has four major components:
+
+1. Algorithms
+2. Containers
+3. Functions
+4. Iterators
+
+---
+
+## 1. Containers
+
+Containers are used to manage collections of objects.
+
+### Sequence Containers:
+
+* **vector**: Dynamic array
+* **list**: Doubly linked list
+* **deque**: Double-ended queue
+* **array**: Static array
+* **forward\_list**: Singly linked list
+
+#### Example:
+
+```cpp
+vector<int> v = {1, 2, 3};
+v.push_back(4);
+for(auto i : v) cout << i << " "; // 1 2 3 4
+```
+
+### Associative Containers:
+
+* **set**: Stores unique sorted elements
+* **multiset**: Stores sorted elements with duplicates
+* **map**: Stores key-value pairs with unique keys
+* **multimap**: Stores key-value pairs with duplicate keys
+
+#### Example:
+
+```cpp
+map<string, int> mp;
+mp["apple"] = 5;
+mp["banana"] = 10;
+for(auto p : mp) cout << p.first << " => " << p.second << endl;
+```
+
+### Unordered Containers:
+
+* **unordered\_set**
+* **unordered\_multiset**
+* **unordered\_map**
+* **unordered\_multimap**
+
+These use hash tables for faster access.
+
+#### Example:
+
+```cpp
+unordered_set<int> s = {1, 2, 3};
+s.insert(4);
+```
+
+---
+
+## 2. Iterators
+
+Iterators are used to point at the memory addresses of STL containers.
+
+### Types:
+
+* **begin()** – returns an iterator to the first element
+* **end()** – returns an iterator to the last element + 1
+* **rbegin(), rend()** – for reverse iteration
+
+#### Example:
+
+```cpp
+vector<int> v = {10, 20, 30};
+for(vector<int>::iterator it = v.begin(); it != v.end(); ++it) {
+    cout << *it << " ";
+}
+```
+
+---
+
+## 3. Algorithms
+
+Algorithms operate on containers through iterators.
+
+### Common Functions:
+
+* **sort(begin, end)**
+* **reverse(begin, end)**
+* **count(begin, end, value)**
+* **find(begin, end, value)**
+* **binary\_search(begin, end, value)**
+* **lower\_bound(begin, end, value)**
+* **upper\_bound(begin, end, value)**
+
+#### Example:
+
+```cpp
+vector<int> v = {3, 1, 4, 1, 5};
+sort(v.begin(), v.end());
+if(binary_search(v.begin(), v.end(), 4)) cout << "Found";
+```
+
+---
+
+## 4. Function Objects (Functors)
+
+Function objects are objects that can be called as if they are functions.
+
+#### Example:
+
+```cpp
+struct Compare {
+    bool operator()(int a, int b) {
+        return a > b;
+    }
+};
+priority_queue<int, vector<int>, Compare> pq; // min-heap
+```
+
+---
+
+## 5. Utility Components
+
+* **pair**: Holds two values
+
+```cpp
+pair<int, string> p = {1, "hello"};
+cout << p.first << " " << p.second;
+```
+
+* **tuple** (C++11+): Holds multiple values
+
+```cpp
+tuple<int, string, double> t = make_tuple(1, "hello", 2.5);
+cout << get<1>(t);
+```
+
+---
+
+## 6. Container Adapters
+
+* **stack**: LIFO
+* **queue**: FIFO
+* **priority\_queue**: Max or Min Heap
+
+#### Example:
+
+```cpp
+stack<int> st;
+st.push(1); st.push(2);
+cout << st.top(); // 2
+```
+
+---
+
+## Tips:
+
+* Always `#include <bits/stdc++.h>` in contests for all STL headers.
+* Use `auto` for iterators to save typing.
+* Understand time complexities (e.g., set/map = O(log n), unordered\_map = O(1) average).
+
+---
+
+## Conclusion
+
+STL boosts productivity by providing pre-built, tested, and efficient data structures and algorithms. Mastering it is essential for competitive programming and software development in C++.
