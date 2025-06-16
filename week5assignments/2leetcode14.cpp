@@ -132,3 +132,38 @@ int main() {
 
     return 0;
 }
+// simple solution
+class Solution {
+public:
+    string longestCommonPrefix(vector<string>& strs) {
+        string ans = "";
+        int index = 0; // Index of the current character to compare
+
+        while (true) {
+            char currChar = 0; // Store the character to compare at position 'index'
+
+            for (int i = 0; i < strs.size(); i++) {
+                // If we've reached the end of any string, stop
+                if (index >= strs[i].size()) {
+                    return ans;
+                }
+
+                if (i == 0) {
+                    // For the first string, set the expected character
+                    currChar = strs[i][index];
+                } else {
+                    // Compare with the current character of other strings
+                    if (strs[i][index] != currChar) {
+                        return ans;
+                    }
+                }
+            }
+
+            // If all strings had the same character at 'index', add it to answer
+            ans.push_back(currChar);
+            index++; // Move to the next character
+        }
+
+        return ans;
+    }
+};
