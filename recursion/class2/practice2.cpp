@@ -11,12 +11,12 @@ void printDigits(int n) {
         return;
     }
 
-    // Recursive call to process the remaining digits
-    printDigits(n / 10);
+    // Recursive call to process the remaining digits (except the last one)
+    printDigits(n / 10);  // Example: if n = 1234, this will recurse as 1234 → 123 → 12 → 1 → 0 (stop)
 
-    // Process current digit
-    int digit = n % 10;
-    cout << digit << " ";
+    // Process current digit (in reverse stack, so prints left to right)
+    int digit = n % 10;   // Extract the last digit at this level
+    cout << digit << " "; // Print the digit
 }
 
 // ===============================
