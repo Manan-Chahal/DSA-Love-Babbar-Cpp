@@ -1,3 +1,92 @@
+//---
+
+// ### ✅ **Understanding the Problem**
+
+// 1. **Goal:** Format a list of words into justified text such that:
+
+//    * Each line is **exactly `maxWidth` characters**.
+//    * **Distribute spaces evenly** between words.
+//    * **Left-over spaces** (if not divisible) go more to the **left**.
+//    * **Last line** is **left-justified**, not fully justified.
+
+// 2. **Constraints to keep in mind:**
+
+//    * Words are **non-empty**, max 20 characters.
+//    * `maxWidth` is up to 100.
+//    * Every word fits individually within `maxWidth`.
+
+// ---
+
+// ### 🧠 **Points to Remember While Implementing**
+
+// 1. **Greedy Word Packing:**
+
+//    * Pack as many words as possible **without exceeding `maxWidth`**.
+//    * Keep track of `lineLength = total characters + spaces needed`.
+
+// 2. **Three Main Cases:**
+
+//    * **Middle lines with multiple words (justified):**
+
+//      * Distribute spaces between words as evenly as possible.
+//      * Extra spaces should go to the **left slots**.
+//    * **Lines with one word:**
+
+//      * **Left-justify** and pad the rest with spaces.
+//    * **Last line:**
+
+//      * All words are **left-justified**.
+//      * Add only **one space** between words.
+//      * Pad remaining spaces at the end.
+
+// 3. **Spacing Calculation:**
+
+//    * `totalSpaces = maxWidth - total length of words (without spaces)`
+//    * `spacesPerGap = totalSpaces / (words - 1)`
+//    * `extraSpaces = totalSpaces % (words - 1)`
+
+// 4. **Use `ostringstream` or `string` for clean string construction.**
+
+// 5. **Loop Control:**
+
+//    * Maintain a current line `start` to `end` range.
+//    * When the next word doesn’t fit, **process the current line** and reset.
+
+// 6. **Edge Handling:**
+
+//    * Always **check the last line** and process it separately with left-justification.
+//    * Handle **single-word lines** by appending spaces to the right.
+
+// ---
+
+// ### 💡 Example Breakdown
+
+// ```cpp
+// Input: ["This", "is", "an", "example", "of", "text", "justification."], maxWidth = 16
+
+// Output:
+// [
+//    "This    is    an",      // 4 spaces between words
+//    "example  of text",      // 2 spaces between "example" and "of"
+//    "justification.  "       // last line left-justified
+// ]
+// ```
+
+// ---
+
+// ### 🔁 Summary Checklist
+
+// | Task                  | Remember                              |
+// | --------------------- | ------------------------------------- |
+// | ✅ Greedy word packing | Don't exceed `maxWidth`               |
+// | ✅ Space calculation   | Distribute evenly; extra on the left  |
+// | ✅ Handle 1-word line  | Left-justify                          |
+// | ✅ Handle last line    | Left-justify                          |
+// | ✅ Padding             | Always make line length == `maxWidth` |
+
+// ---
+
+
 #include <iostream>
 #include <vector>
 #include <string>
@@ -85,16 +174,61 @@ public:
 int main()
 {
     Solution sol;
+
+    // -------------------------
+    // Original Example
     vector<string> words = {"This", "is", "an", "example", "of", "text", "justification."};
     int maxWidth = 16;
-
     vector<string> result = sol.fullJustify(words, maxWidth);
-
-    cout << "Justified Text:\n";
+    cout << "Original Test Case:\n";
     for (const string &line : result)
-    {
         cout << "\"" << line << "\"" << endl;
-    }
+
+    // -------------------------
+    // Test Case 2: Single short word
+    words = {"Hello"};
+    maxWidth = 10;
+    result = sol.fullJustify(words, maxWidth);
+    cout << "\nTest Case 2 (Single Word):\n";
+    for (const string &line : result)
+        cout << "\"" << line << "\"" << endl;
+
+    // -------------------------
+    // Test Case 3: Exact line fit
+    words = {"OpenAI", "GPT", "rocks"};
+    maxWidth = 15;
+    result = sol.fullJustify(words, maxWidth);
+    cout << "\nTest Case 3 (Exact Fit):\n";
+    for (const string &line : result)
+        cout << "\"" << line << "\"" << endl;
+
+    // -------------------------
+    // Test Case 4: One word per line
+    words = {"a", "b", "c", "d", "e"};
+    maxWidth = 1;
+    result = sol.fullJustify(words, maxWidth);
+    cout << "\nTest Case 4 (One Word Per Line):\n";
+    for (const string &line : result)
+        cout << "\"" << line << "\"" << endl;
+
+    // -------------------------
+    // Test Case 5: Space distribution
+    words = {"What", "must", "be", "acknowledgment", "shall", "be"};
+    maxWidth = 16;
+    result = sol.fullJustify(words, maxWidth);
+    cout << "\nTest Case 5 (Space Distribution):\n";
+    for (const string &line : result)
+        cout << "\"" << line << "\"" << endl;
+
+    // -------------------------
+    // Test Case 6: Large example from LeetCode
+    words = {"Science", "is", "what", "we", "understand", "well", "enough", "to",
+             "explain", "to", "a", "computer.", "Art", "is", "everything", "else", "we", "do"};
+    maxWidth = 20;
+    result = sol.fullJustify(words, maxWidth);
+    cout << "\nTest Case 6 (Large Input):\n";
+    for (const string &line : result)
+        cout << "\"" << line << "\"" << endl;
 
     return 0;
 }
