@@ -1,44 +1,64 @@
+#include <iostream>
+#include <vector>
+#include <climits> // for INT_MAX
+using namespace std;
+
 class Solution {
 public:
+    // Recursive function to find min coins needed for 'amount'
     int solve(vector<int>& coins, int amount) {
-        //base case
-        if(amount == 0) {
-            //0 amount create krne k liye kitne coins
+        // Base Case 1: If amount is 0 → no coin needed
+        if (amount == 0) {
             return 0;
         }
-        //if amount < 0
-        int minCoinAns = INT_MAX;
-        //hr amount k liye poore coins k array ko
-        //traverse krre h 
-        for(int i=0; i<coins.size(); i++) {
-            //int amt = amount;
-            int coin = coins[i];
-            //if coin value > amount value, no need to call recursive function
-            //if coin value <= amount value , call recursive fiunction
-            if( coin <= amount) {
-                //1 coin toh use hogya, amount becomes amount-coins
-                //baaki reciursion sambhal lega
-                int recursionAns = solve(coins, amount-coin);
-                //ho skta h recursionAns valid ho ya fer Invalid 
-                //invalid case -> recursionAns -> INT_MAX;
-                //valid case -> recursionAns -> not equal to INT_MAX;
-                if(recursionAns != INT_MAX) {
-                    //valid answer aaaya h 
-                    int coinsUsed = 1 + recursionAns;
-                    //kya above answer minimum hai
-                    minCoinAns = min(minCoinAns, coinsUsed);
-                }
 
+        // Base Case 2: If amount goes negative → not a valid way
+        if (amount < 0) {
+            return INT_MAX;
+        }
+
+        int minCoinAns = INT_MAX;
+
+        // Try every coin to find minimum coins needed
+        for (int i = 0; i < coins.size(); i++) {
+            int coin = coins[i];
+
+            // Only consider if coin is less than or equal to amount
+            if (coin <= amount) {
+                int recursionAns = solve(coins, amount - coin);
+
+                // If recursion result is valid (not INT_MAX), add this coin
+                if (recursionAns != INT_MAX) {
+                    minCoinAns = min(minCoinAns, 1 + recursionAns);
+                }
             }
         }
-    return minCoinAns;
+
+        return minCoinAns;
     }
+
     int coinChange(vector<int>& coins, int amount) {
         int ans = solve(coins, amount);
-        if(ans == INT_MAX) {
+
+        // If answer is still INT_MAX, means no valid combination
+        if (ans == INT_MAX) {
             return -1;
         }
-        else
-            return ans;
+
+        return ans;
     }
 };
+int main() {
+    Solution solution;
+    vector<int> coins = {1, 2, 5}; // Example coin denominations
+    int amount = 11; // Example amount to make change for
+
+    int result = solution.coinChange(coins, amount);
+    if (result != -1) {
+        cout << "Minimum coins needed: " << result << endl;
+    } else {
+        cout << "No valid combination of coins can make the amount." << endl;
+    }
+
+    return 0;
+}
