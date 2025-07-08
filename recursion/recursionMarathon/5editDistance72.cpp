@@ -37,3 +37,30 @@ public:
         return solve(word1, word2, 0, 0);
     }
 };
+
+// Example usage and test cases
+#include <iostream>
+using namespace std;
+
+int main() {
+    Solution3 sol;
+    string a = "horse";
+    string b = "ros";
+    cout << "Edit distance between \"" << a << "\" and \"" << b << "\": " << sol.minDistance(a, b) << " (Expected: 3)" << endl;
+
+    a = "intention";
+    b = "execution";
+    cout << "Edit distance between \"" << a << "\" and \"" << b << "\": " << sol.minDistance(a, b) << " (Expected: 5)" << endl;
+
+    a = "abc";
+    b = "yabd";
+    cout << "Edit distance between \"" << a << "\" and \"" << b << "\": " << sol.minDistance(a, b) << " (Expected: 2)" << endl;
+
+    a = "";
+    b = "abc";
+    cout << "Edit distance between \"" << a << "\" and \"" << b << "\": " << sol.minDistance(a, b) << " (Expected: 3)" << endl;
+
+    a = "abc";
+    b = "";
+    cout << "Edit distance between \"" << a << "\" and \"" << b << "\": " << sol.minDistance(a, b) << " (Expected: 3)" << endl;
+}
