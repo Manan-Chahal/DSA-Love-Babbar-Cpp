@@ -6,125 +6,108 @@ Problem Statement:
 The n-queens puzzle is the problem of placing n queens on an n x n chessboard such that no two queens attack each other.
 Return the number of distinct solutions to the n-queens puzzle.
 
-Approach (Your Backtracking Algorithm):
----------------------------------------
+Approach (Your Optimized Backtracking with Hashmaps):
+-----------------------------------------------------
 - Place queens column by column.
 - For each column, try placing a queen in every row.
-- Use isSafe to check if a queen can be placed at (row, col) (no queen in same row, upper-left diagonal, lower-left diagonal).
+- Use hashmaps to check if a row, lower diagonal, or upper diagonal is already occupied by a queen (for O(1) safety check).
 - If safe, place the queen and recurse for the next column.
-- Backtrack after recursion: remove the queen.
-- When all columns are filled, count the solution.
+- Backtrack after recursion: remove the queen and update hashmaps.
+- When all columns are filled, store the board configuration as a solution.
 
-Time Complexity:
-----------------
-- O(N!) (worst case, as each queen can be placed in N positions, but pruning reduces actual calls)
+Time Complexity: O(N!) (worst case, as each queen can be placed in N positions, but pruning reduces actual calls)
+Space Complexity: O(N^2) for storing all solutions and the board
 
-Space Complexity:
------------------
-- O(N^2) for storing board and recursion stack
-
-Explanation:
-------------
-- isSafe: Checks if a queen can be placed at (row, col) by scanning left in the row, upper-left diagonal, and lower-left diagonal.
-- find: Recursively tries to place queens in each column. If a solution is found, adds the board to ans.
-- solveNQueens: Initializes the board and starts the recursion.
-- totalNQueens: Returns the number of valid solutions.
-
-Code uses your approach only: classic backtracking, isSafe checks, board modification, and backtracking.
 */
 
 #include <iostream>
 #include <vector>
+#include <unordered_map>
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    // Checks if it's safe to place a queen at (row, col)
-    bool isSafe(vector<string> &B, int row, int col)
-    {
-        // Check left in the current row
-        for (int i = col - 1; i >= 0; --i)
-        {
-            if (B[row][i] == 'Q')
-                return false;
-        }
+    unordered_map<int,bool> rowCheck;
+    unordered_map<int,bool> lowerDiagnolCheck;
+    unordered_map<int,bool> upperDiagnolCheck;
 
-        // Check upper left diagonal
-        for (int i = row, j = col; i >= 0 && j >= 0; i--, j--)
-        {
-            if (B[i][j] == 'Q')
-                return false;
+    // Store the current board configuration as a vector of strings
+    void storeSolution(vector<vector<string>> &ans, vector<vector<char>> &board, int n ) {
+        vector<string> tempAns;
+        for(int i=0; i<n; i++) {
+            string output = "";
+            for(int j=0; j<n; j++) {
+                output.push_back(board[i][j]);
+            }
+            tempAns.push_back(output);
         }
+        ans.push_back(tempAns);
+    }
 
-        // Check lower left diagonal
-        for (int i = row, j = col; i < B.size() && j >= 0; i++, j--)
-        {
-            if (B[i][j] == 'Q')
-                return false;
-        }
+    // Check if it's safe to place a queen at (row, col)
+    bool isSafe(int row, int col, vector<vector<char>> &board) {
+        // Check row, upper diagonal, and lower diagonal using hashmaps
+        if(rowCheck[row] == true) return false;
+        if(upperDiagnolCheck[row-col] == true) return false;
+        if(lowerDiagnolCheck[row+col] == true) return false;
         return true;
     }
 
-    // Recursively tries to place queens column by column
-    bool find(vector<string> &B, int col, vector<vector<string>> &ans)
-    {
-        int n = B.size();
-        if (col >= n)
-        {
-            ans.push_back(B); // Store valid board configuration
-            return true;
+    // Recursive function to place queens column by column
+    void solve(int n, vector<vector<char>> &board, vector<vector<string>> &ans, int col ) {
+        // Base case: all queens are placed
+        if(col >= n ) {
+            storeSolution(ans, board, n);
+            return;
         }
-        int res = 0;
-        for (int row = 0; row < n; row++)
-        {
-            if (isSafe(B, row, col))
-            {
-                B[row][col] = 'Q'; // Place queen
-                res |= find(B, col + 1, ans); // Recurse for next column
-                B[row][col] = '.'; // Backtrack
+        // Try placing a queen in every row of the current column
+        for(int row=0; row<n; row++) {
+            if(isSafe(row,col,board)) {
+                // Place queen
+                board[row][col] = 'Q';
+                rowCheck[row] = true;
+                lowerDiagnolCheck[row+col] = true;
+                upperDiagnolCheck[row-col] = true;
+                // Recurse for next column
+                solve(n,board,ans,col+1);
+                // Backtrack: remove queen and update hashmaps
+                board[row][col] = '.';
+                rowCheck[row] = false;
+                lowerDiagnolCheck[row+col] = false;
+                upperDiagnolCheck[row-col] = false;
             }
         }
-        return res;
     }
 
-    // Generates all valid N-Queens board configurations
-    vector<vector<string>> solveNQueens(int n)
-    {
-        vector<string> B(n, string(n, '.'));
+    // Main function to solve N-Queens
+    vector<vector<string>> solveNQueens(int n) {
         vector<vector<string>> ans;
-        find(B, 0, ans);
+        vector<vector<char>> board(n, vector<char>(n,'.'));
+        int col = 0;
+        solve(n,board,ans,col);
         return ans;
     }
 
-    // Returns the total number of distinct solutions
+    // Function to return the total number of distinct solutions (for N-Queens II)
     int totalNQueens(int n)
     {
-        auto ans = solveNQueens(n);
-        return ans.size();
+        auto ans = solveNQueens(n); // Get all valid solutions
+        return ans.size(); // Return the count of solutions
     }
 };
 
 // Test cases
 int main() {
     Solution sol;
-    cout << "Test Case 1: n = 4" << endl;
-    cout << "Number of solutions: " << sol.totalNQueens(4) << endl; // Expected: 2
-
-    cout << "Test Case 2: n = 1" << endl;
-    cout << "Number of solutions: " << sol.totalNQueens(1) << endl; // Expected: 1
-
-    cout << "Test Case 3: n = 5" << endl;
-    cout << "Number of solutions: " << sol.totalNQueens(5) << endl; // Expected: 10
-
-    cout << "Test Case 4: n = 8" << endl;
-    cout << "Number of solutions: " << sol.totalNQueens(8) << endl; // Expected: 92
-
+    cout << "N-Queens II: Number of solutions for n = 4: " << sol.totalNQueens(4) << endl; // Expected: 2
+    cout << "N-Queens II: Number of solutions for n = 1: " << sol.totalNQueens(1) << endl; // Expected: 1
+    cout << "N-Queens II: Number of solutions for n = 5: " << sol.totalNQueens(5) << endl; // Expected: 10
+    cout << "N-Queens II: Number of solutions for n = 8: " << sol.totalNQueens(8) << endl; // Expected: 92
     return 0;
 }
 
 /*
-Code uses your approach only: classic backtracking, isSafe checks, board modification, and backtracking.
+Code uses your approach only: optimized backtracking with hashmaps for row and diagonal checks.
 Time and space complexity are included and explained in comments.
 Test cases are provided for n = 1, 4, 5, 8.
 */
