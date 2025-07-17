@@ -1,3 +1,6 @@
+// GeeksforGeeks Problem Link:
+// https://www.geeksforgeeks.org/problems/add-1-to-a-number-represented-as-linked-list/1
+
 //{ Driver Code Starts
 //Initial template for C++
 
@@ -46,6 +49,7 @@ struct Node
 class Solution
 {
     public:
+    // Iterative function to reverse a linked list
     Node* reverseList(Node* &head) {
         Node* prev = NULL;
         Node* curr = head;
@@ -57,56 +61,33 @@ class Solution
         }
         return prev;
     }
+    // Function to add one to the number represented by the linked list
     Node* addOne(Node *head) 
     {
-        //step1: reverse list;
+        // Step 1: Reverse the list
         head = reverseList(head);
-        //step2: add one
-        //mujhe plus one karna h, toh main carry ko hi 1 maaanleta hu
+        // Step 2: Add one
         int carry = 1;
         Node* temp = head;
         
         while(temp != NULL) {
             int sum = carry + temp->data;
-            //current node me 1 hi digit store hoga, double digit nahi ho skta 
             int digit = sum % 10;
             carry = sum / 10;
             
             temp -> data = digit;
-            //move to next node
-            //special case, jo last node k liye hoga
+            // If at last node and carry remains, add new node
             if(temp -> next == NULL && carry != 0) {
                 Node* newNode = new Node(carry);
                 newNode->next = NULL;
-                
                 temp->next = newNode;
                 temp = newNode;
             }
-            //traverse krre h, toh aage toh badhna hi h 
             temp = temp -> next;
         }
-
-        
-        //step3: reverseList;
+        // Step 3: Reverse the list again to restore original order
         head = reverseList(head);
-        
         return head;
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
     }
 };
 

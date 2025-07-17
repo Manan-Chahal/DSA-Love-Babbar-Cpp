@@ -1,3 +1,6 @@
+//daily challenge
+//Problem: Maximum Length of Alternating Subarray
+
 class Solution {
 public:
     int maximumLength(vector<int>& nums) {

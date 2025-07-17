@@ -1,6 +1,7 @@
-//{ Driver Code Starts
-#include <bits/stdc++.h>
+// GeeksforGeeks Problem Link:
+// https://www.geeksforgeeks.org/problems/given-a-linked-list-of-0s-1s-and-2s-sort-it/1
 
+#include <bits/stdc++.h>
 using namespace std;
 /* Link list Node */
 struct Node {
@@ -14,12 +15,9 @@ struct Node {
 
 struct Node *start = NULL;
 
-
-// } Driver Code Ends
 /*
- 
-  Node is defined as
-  struct Node {
+Node is defined as
+struct Node {
     int data;
     struct Node *next;
     Node(int x) {
@@ -27,8 +25,8 @@ struct Node *start = NULL;
         next = NULL;
     }
 };
-
 */
+
 class Solution
 {
     public:
@@ -111,24 +109,6 @@ class Solution
                 return twoHead;
             }
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
     }
 };
 
@@ -147,7 +127,6 @@ void printList(struct Node *Node) {
 /* Drier program to test above function*/
 void insert(int n1) {
     int n, value, i;
-    // scanf("%d",&n);
     n = n1;
     struct Node *temp;
     for (i = 0; i < n; i++) {
@@ -183,4 +162,3 @@ int main() {
 
     return 0;
 }
-// } Driver Code Ends
