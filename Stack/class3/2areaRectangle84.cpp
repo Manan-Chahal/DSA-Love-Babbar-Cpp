@@ -1,3 +1,36 @@
+/*
+Explanation of the code:
+
+This code solves the "Largest Rectangle in Histogram" problem (LeetCode 84).
+Given an array of heights representing histogram bars, the goal is to find the area of the largest rectangle that can be formed.
+
+Key Functions:
+
+1. nextSmallerElement:
+   - For each bar, finds the index of the next smaller bar to the right.
+   - Uses a stack to keep track of indices.
+   - If there is no smaller bar to the right, stores -1.
+
+2. prevSmallerElement:
+   - For each bar, finds the index of the previous smaller bar to the left.
+   - Uses a stack to keep track of indices.
+   - If there is no smaller bar to the left, stores -1.
+
+3. largestRectangleArea:
+   - Calls nextSmallerElement and prevSmallerElement to get the boundaries for each bar.
+   - For each bar, calculates the width as (nextSmallerIndex - prevSmallerIndex - 1).
+   - The area for each bar is width * height.
+   - Returns the maximum area found.
+
+How it works:
+-------------
+- For each bar, the code finds how far it can extend to the left and right without hitting a shorter bar.
+- The stack-based approach ensures O(N) time complexity for finding next/previous smaller elements.
+- The main loop computes the area for each bar using these boundaries and keeps track of the maximum.
+
+This approach is efficient and commonly used for histogram rectangle problems.
+*/
+
 class Solution {
 public:
     void nextSmallerElement(vector<int>& arr, vector<int>& nextAns) {

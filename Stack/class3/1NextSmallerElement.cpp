@@ -38,7 +38,7 @@ void prevSmallerElement(int arr[], int n, vector<int>& ans) {
   stack<int> s;
   s.push(-1);
 
-  //fark sirf ioss wale loop ka h 
+  //fark sirf iss wale loop ka h 
   for(int i=0; i<n; i++) {
     int element = arr[i];
     while(s.top() > element) {

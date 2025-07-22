@@ -1,0 +1,88 @@
+Folder Structure and File Roles
+
+algorithm.h
+Header file
+- Declares the function sort(int arr[], int n); so other files know it exists.
+- Uses include guards (#ifndef, #define, #endif) to prevent multiple inclusion errors.
+
+algorithm.cpp
+Source file
+- Implements the sort function. In your example, it just prints a message.
+
+main.cpp
+Source file
+- Contains the main() function. It includes algorithm.h and calls sort().
+
+algorithm.o, main.o
+Object files
+- These are the compiled versions of your .cpp files. They contain machine code but are not yet a complete program.
+
+lallu_program
+Executable file
+- This is the final program produced after linking the object files. Running this file executes your code.
+
+📝 Notes on the Compilation and Linking Process
+
+1. Header Files (.h)
+- Used to declare functions and classes.
+- Allow multiple .cpp files to share declarations.
+- Include guards prevent double inclusion.
+
+2. Source Files (.cpp)
+- Contain the actual implementation of functions.
+- Each .cpp file is compiled separately.
+
+3. Object Files (.o)
+- Created by compiling .cpp files with g++ -c file.cpp.
+- Contain machine code for the functions, but are not executable on their own.
+
+4. Linking
+- The linker combines all .o files into a single executable.
+- Example command:
+  g++ main.o algorithm.o -o lallu_program
+- The linker resolves function calls across files (e.g., main.o calls sort in algorithm.o).
+
+5. Executable
+- The final program (lallu_program) can be run directly.
+- It contains all the code and data needed, including references to system libraries.
+
+🧑‍🏫 Example Workflow
+
+Write code:
+- main.cpp uses sort() declared in algorithm.h.
+- algorithm.cpp implements sort().
+
+Compile each .cpp to .o:
+- g++ -c main.cpp → main.o
+- g++ -c algorithm.cpp → algorithm.o
+
+Link object files:
+- g++ main.o algorithm.o -o lallu_program
+
+Run the program:
+- lallu_program (on Linux/Mac) or lallu_program.exe (on Windows)
+
+🔗 How These Files Work Together (File Network Workflow)
+
+1. **main.cpp** includes **algorithm.h** to know about the `sort` function.
+2. **algorithm.cpp** also includes **algorithm.h** to ensure its implementation matches the declaration.
+3. When you compile, each `.cpp` file is turned into a `.o` (object) file:
+   - `main.cpp` → `main.o`
+   - `algorithm.cpp` → `algorithm.o`
+4. The linker takes all `.o` files and connects function calls (like `sort` in `main.o`) to their actual code (in `algorithm.o`).
+5. The result is a single executable (`lallu_program`) that contains all the code and can be run on your computer.
+
+**Visual Workflow:**
+[main.cpp] --includes--> [algorithm.h]
+[algorithm.cpp] --includes--> [algorithm.h]
+[main.cpp] --compiled to--> [main.o]
+[algorithm.cpp] --compiled to--> [algorithm.o]
+[main.o] + [algorithm.o] --linked to--> [lallu_program (executable)]
+
+🗒️ Extra Notes
+- The lallu_program file is not human-readable; it's machine code.
+- The string "palak ka international patented sort algo." is embedded in the executable and will appear when you run the program.
+- This modular approach makes large projects manageable and allows for code reuse.
+
+Summary:
+Your teacher's example demonstrates how C++ projects are organized and built using header files for declarations, source files for implementations, object files as intermediates, and a final executable produced by linking everything together. This is a standard and powerful workflow for C++
