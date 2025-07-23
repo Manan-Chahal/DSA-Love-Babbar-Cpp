@@ -1,3 +1,11 @@
+/*
+| Expression        | Meaning                                           |
+| ----------------- | ------------------------------------------------- |
+| v.back()          | Returns the **last pair** from the vector         |
+| v.back().first    | Returns the **value** from the last pair          |
+| v.back().second   | Returns the **minimum-so-far** from the last pair |
+*/
+
 class MinStack
 {
 public:
@@ -44,5 +52,4 @@ public:
  * obj->push(val);
  * obj->pop();
  * int param_3 = obj->top();
- * int param_4 = obj->getMin();
- */
+ * int param_4 = obj-

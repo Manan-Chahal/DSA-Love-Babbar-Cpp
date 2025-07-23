@@ -52,12 +52,17 @@ void prevSmallerElement(int arr[], int n, vector<int>& ans) {
 
 int main() {
   //input 
-  int arr[] = {8,4,6,2,3};
-  int n = 5;
+  int arr[] = {2,2};
+  int n = 2;
 
   vector<int> ans;
 
-  prevSmallerElement(arr,n,ans);
+  // prevSmallerElement(arr,n,ans);
+  // //reverse(ans.begin(), ans.end());
+  // for(auto i: ans) {
+  //   cout << i << " ";
+  // }
+  nextSmallerElement(arr,n,ans);
   //reverse(ans.begin(), ans.end());
   for(auto i: ans) {
     cout << i << " ";
