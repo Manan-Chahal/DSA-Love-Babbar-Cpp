@@ -1,3 +1,7 @@
+// this question was done in mega class for you to understand this question 
+//watch megaclass again and watch class3 video again for the concept of this question 
+// my doubt is in line 16 and 31 
+//why v[st.top()] > v[i]) in line 16 and v[st.top()] >= v[i] in line 31
 class Solution
 {
 public:
