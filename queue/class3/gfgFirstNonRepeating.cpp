@@ -1,3 +1,4 @@
+//link:https://www.geeksforgeeks.org/problems/first-non-repeating-character-in-a-stream1216/1
 //{ Driver Code Starts
 #include<bits/stdc++.h>
 using namespace std;
