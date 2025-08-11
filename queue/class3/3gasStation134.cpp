@@ -5,7 +5,7 @@ public:
         int deficit = 0;
         int balance = 0;
 
-        for(int i=0; i<gas.size(); i++) {
+        for(int i=0; i<gas.size(); i++) {//
             if(balance + gas[i] < cost[i]) {
                 //deficit case
                 deficit += balance+gas[i]-cost[i];
