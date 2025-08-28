@@ -16,7 +16,7 @@ public:
         if(root == NULL) {
             return;
         }
-        //LNR
+        // LNR inorder is always sorted in BST
         storeInorder(root->left, inorder);
         inorder.push_back(root->val);
         storeInorder(root->right, inorder);
