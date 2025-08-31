@@ -1,3 +1,4 @@
+// important 
 class BSTIterator {
     stack<TreeNode*>st; // using this stack, I'm doing LNR, inorder traversal.
     stack<TreeNode*>revSt; // reverse inorder traversal
