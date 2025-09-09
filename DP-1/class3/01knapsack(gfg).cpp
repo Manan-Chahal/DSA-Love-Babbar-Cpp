@@ -88,32 +88,59 @@ class Solution {
         //step1: create dp array 
         int n = val.size();
         // vector<vector<int> > dp(capacity+1, vector<int>(n, 0));
-        vector<int> prev(capacity+1, 0);
+        vector<int> prev(capacity+1, 0);// made 2 arrays 
         vector<int> curr(capacity+1, 0);
         //step2: analyse base case
         for(int w=wt[0]; w<=capacity; w++) {
+            //dp[w][0] =  val[0];
+            //changed because  we are building array from left to right
+            //we will fill prev first and then curr
+            // so we removed [0]
             prev[w] =  val[0];
         }
         //step3: paramter -> range -> reverse -> copy paste logic 
         //recursion 
         //capacity -> [ W to 0 ]
         //index -> [ n-1 to 0 ]
+        // we changed loop also 
+        // our approch is of coloumn wise curr is dependent on prev column 
+        //so we will 
+        // for(int weight=0; weight<=capacity; weight++) {
+        //     for(int index=1; index<=n-1; index++) {
         for(int index=1; index<=n-1; index++) {
+            // we changed loop also 
             for(int weight=0; weight<=capacity; weight++) {
                 int incl = 0;
                 if(wt[index] <= weight) {
+                    //incl = val[index] + dp[weight-wt[index]][index-1];
+                    //removed [index-1] and added prev index-1 means prev here
                     incl = val[index] + prev[weight-wt[index]];
+                    
                 }
                 int excl = 0 + prev[weight];
+                //removed [index-1] and dp , added prev index-1 means prev here
+
                 //ans return and store 
+                //dp[weight][index] = max(incl,excl);
+                //here only index was there not index-1 so we put curr here 
                 curr[weight] = max(incl,excl);
+                //
             }
             //shift
+            // shifting is very important here we forget
             prev = curr;
         }
         
         //ans return 
+        // how do we know what to return here ?
+        //return dp[capacity][n-1]; WHY NOT THIS?
+        //look at the approach we removed 2d array indexes everywhere 
+        // so when we removed index-1 we put prev 
+        // when we removed index we put curr
+        // so at last index will be n-1 so we will return prev
         return prev[capacity];
+        //no change in approach at all from memoization code 
+        //just some lines of code 
 
     }
     
