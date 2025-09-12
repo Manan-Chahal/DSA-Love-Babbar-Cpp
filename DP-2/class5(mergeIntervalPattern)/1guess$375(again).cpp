@@ -1,5 +1,5 @@
 class Solution {
-public:
+public: 
     int solveUsingRec(int s, int e) {
         //base case
         if(s >= e) {
