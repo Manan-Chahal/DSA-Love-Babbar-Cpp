@@ -53,7 +53,17 @@ class Graph {
       //initial state
       q.push(src);
       visited[src] = true;
-
+      /*
+      | Node | Connected To (node, weight) |
+      | ---- | --------------------------- |
+      | 0    | (3,3), (5,3), (2,3)         |
+      | 1    | — *(no outgoing edge)*      |
+      | 2    | (5,3)                       |
+      | 3    | (5,3)                       |
+      | 4    | (1,3)                       |
+      | 5    | (4,3), (6,3)                |
+      | 6    | (1,3)                       |
+      */
       while(!q.empty()) {
         int frontNode = q.front();
         cout << frontNode <<", ";

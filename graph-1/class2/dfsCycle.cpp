@@ -3,6 +3,7 @@
 using namespace std;
 
 // } Driver Code Ends
+//undirected graph
 class Solution {
   public:
     bool checkCycleDfsHelper(int src, unordered_map<int,bool>& vis, vector<int> adj[], int parent) {

@@ -41,7 +41,7 @@ class Solution {
             int n = V;
           for(int i=0; i<n; i++) {
             if(!visited[i]) {
-               ans = cycleDetectionUndirectedBFS(i,visited,adj);
+              ans = cycleDetectionUndirectedBFS(i,visited,adj);
               if(ans == true) {
                 break;
               }
